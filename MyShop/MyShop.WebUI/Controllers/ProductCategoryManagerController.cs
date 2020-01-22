@@ -10,11 +10,11 @@ namespace MyShop.WebUI.Controllers
 {
     public class ProductCategoryManagerController : Controller
     {
-        ProductCategoryRepository context;
+        InMemoryRepository<ProductCategory> context;
 
         public ProductCategoryManagerController()
         {
-            this.context = new ProductCategoryRepository();
+            this.context = new InMemoryRepository<ProductCategory>();
         }
 
         public ActionResult _ProductCategoryPreValidation(String id)
