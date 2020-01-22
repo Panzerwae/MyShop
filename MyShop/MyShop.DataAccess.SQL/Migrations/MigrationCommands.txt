@@ -1,0 +1,4 @@
+﻿Package Manager Console
+1. Enable-Migrations
+2. Add-Migration Initial (Name accordingly)
+3. Update-Database
