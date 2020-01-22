@@ -1,5 +1,6 @@
 ﻿using MyShop.Core.Contracts;
 using MyShop.Core.Models;
+using MyShop.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,5 +103,29 @@ namespace MyShop.Services
                 basketContext.Commit();
             }
         }
-    }
+
+        public List<BasketItemViewModel> GetBasketItems(HttpContextBase httpContext)
+        {
+            Basket basket = GetBasket(httpContext, false);
+
+            if (basket != null)
+            {
+                var result = (from b in basket.BasketItems
+                              join p in productContext.Collection() on b.ProductId equals p.Id
+                              select new BasketItemViewModel()
+                              {
+                                  Id = b.Id,
+                                  Quantity = b.Quantity,
+                                  ProductName = p.Name,
+                                  Image = p.Image,
+                                  Price = p.Price
+                              }).ToList();
+                return result;
+            }
+            else
+            {
+                return new List<BasketItemViewModel>();
+            }
+        }
+    }    
 }
