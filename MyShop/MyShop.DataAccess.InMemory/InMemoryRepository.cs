@@ -11,71 +11,71 @@ namespace MyShop.DataAccess.InMemory
     public class InMemoryRepository<T> where T : BaseEntity
     {
         ObjectCache cache = MemoryCache.Default;
-        List<T> items;
-        String className;
+        List<T> entities;
+        String entityClassName;
         public InMemoryRepository()
         {
-            this.className = typeof(T).Name;
-            this.items = cache[this.className] as List<T>;
-            if (items == null) {
-                items = new List<T>();
+            this.entityClassName = typeof(T).Name;
+            this.entities = cache[this.entityClassName] as List<T>;
+            if (entities == null) {
+                entities = new List<T>();
             }
         }
 
         public void Commit()
         {
-            cache[this.className] = this.items;
+            cache[this.entityClassName] = this.entities;
         }
 
-        public void Insert(T item)
+        public void Insert(T entity)
         {
-            this.items.Add(item);
+            this.entities.Add(entity);
         }
 
-        public void Update(T item)
+        public void Update(T entity)
         {
-            T itemToUpdate = this.items.Find(i => i.Id == item.Id);
+            T entityToUpdate = this.entities.Find(i => i.Id == entity.Id);
 
-            if (itemToUpdate != null)
+            if (entityToUpdate != null)
             {
-                itemToUpdate = item;
+                entityToUpdate = entity;
             }
             else
             {
-                throw new Exception(this.className + " not found to update");
+                throw new Exception(this.entityClassName + " not found to update");
             }
         }
 
         public T Find(String id)
         {
-            T item = items.Find(i => i.Id == id);
+            T entity = entities.Find(i => i.Id == id);
 
-            if (item != null)
+            if (entity != null)
             {
-                return item;
+                return entity;
             }
             else
             {
-                throw new Exception(this.className + " not found");
+                throw new Exception(this.entityClassName + " not found");
             }
         }
 
         public IQueryable<T> Collection()
         {
-            return this.items.AsQueryable();
+            return this.entities.AsQueryable();
         }
 
         public void Delete(String id)
         {
-            T itemToDelete = items.Find(i => i.Id == id);
+            T entityToDelete = entities.Find(i => i.Id == id);
 
-            if (itemToDelete != null)
+            if (entityToDelete != null)
             {
-                this.items.Remove(itemToDelete);
+                this.entities.Remove(entityToDelete);
             }
             else
             {
-                throw new Exception(this.className + " not found to delete");
+                throw new Exception(this.entityClassName + " not found to delete");
             }
         }
     }

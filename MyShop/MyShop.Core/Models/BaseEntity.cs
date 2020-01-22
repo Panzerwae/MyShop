@@ -9,10 +9,10 @@ namespace MyShop.Core.Models
     public abstract class BaseEntity
     {
         public String Id { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset DateCreated { get; set; }
         public BaseEntity() {
             this.Id = Guid.NewGuid().ToString();
-            this.CreatedAt = DateTime.Now;
+            this.DateCreated = DateTime.Now;
         }
     }
 }
