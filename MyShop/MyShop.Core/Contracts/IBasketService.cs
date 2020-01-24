@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 
-namespace MyShop.Corre.Contracts
+namespace MyShop.Core.Contracts
 {
     public interface IBasketService
     {
